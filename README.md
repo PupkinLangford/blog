@@ -1,0 +1,1 @@
+A blog API with two clients: one for reading the blog, and another for adding blog posts. Part of The Odin Project's node.js curriculum.
