@@ -1,5 +1,13 @@
 import {DateTime} from 'luxon';
-import {model, Schema} from 'mongoose';
+import {Document, model, Schema, Types} from 'mongoose';
+
+export interface IPost extends Document {
+  title: string;
+  content: string;
+  author: Types.ObjectId;
+  published: boolean;
+  timestamp: Date;
+}
 
 const PostSchema: Schema = new Schema({
   title: {type: String, required: true},
@@ -9,10 +17,10 @@ const PostSchema: Schema = new Schema({
   timestamp: {type: Date, default: Date.now},
 });
 
-PostSchema.virtual('format_date').get(function (this: {timestamp: Date}) {
+PostSchema.virtual('format_date').get(function (this: IPost) {
   return DateTime.fromJSDate(this.timestamp).toLocaleString(
     DateTime.DATETIME_MED
   );
 });
 
-export default model('Post', PostSchema);
+export default model<IPost>('Post', PostSchema);

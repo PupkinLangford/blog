@@ -1,5 +1,12 @@
-import {model, Schema} from 'mongoose';
+import {Document, model, Schema, Types} from 'mongoose';
 import {DateTime} from 'luxon';
+
+export interface IComment extends Document {
+  username: string;
+  content: string;
+  post: Types.ObjectId;
+  timestamp: Date;
+}
 
 const CommentSchema: Schema = new Schema({
   username: {type: String, default: 'Anonymous'},
@@ -8,10 +15,10 @@ const CommentSchema: Schema = new Schema({
   timestamp: {type: Date, default: Date.now},
 });
 
-CommentSchema.virtual('format_date').get(function (this: {timestamp: Date}) {
+CommentSchema.virtual('format_date').get(function (this: IComment) {
   return DateTime.fromJSDate(this.timestamp).toLocaleString(
     DateTime.DATETIME_MED
   );
 });
 
-export default model('Comment', CommentSchema);
+export default model<IComment>('Comment', CommentSchema);

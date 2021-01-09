@@ -8,6 +8,10 @@ import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import mongoose from 'mongoose';
 
+import postRouter from './routes/posts';
+import commentRouter from './routes/comments';
+import userRouter from './routes/users';
+
 const mongoDB: string = process.env.MONGODB_URI as string;
 mongoose.connect(mongoDB, {useUnifiedTopology: true, useNewUrlParser: true});
 mongoose.connection.on(
@@ -22,12 +26,17 @@ app.use(bodyparser.json());
 app.use(cors());
 
 app.get('/', (_req, res) => {
-  console.log('someone pinged here');
-  res.send('pong');
+  res.redirect('/api/posts');
 });
+
+app.get('/api', (_req, res) => {
+  res.redirect('/api/posts');
+});
+
+app.use('/api/users', userRouter);
+app.use('/api/posts', postRouter);
+app.use('/api/posts/:id/comments', commentRouter);
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`now listening for requests on port ${process.env.SERVER_PORT}`);
 });
-
-export default app;
