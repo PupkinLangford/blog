@@ -1,4 +1,5 @@
 import User from '../models/user';
+import Post from '../models/post';
 import {RequestHandler} from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
@@ -87,7 +88,12 @@ const user_get: RequestHandler = (req, res, next) => {
     if (!foundUser) {
       return res.json({message: 'user not found'});
     }
-    return res.json({username: foundUser.username});
+    Post.find({author: req.params.id, published: true}).exec(
+      (err, foundPosts) => {
+        if (err) return next(err);
+        return res.json({username: foundUser.username, posts: foundPosts});
+      }
+    );
   });
 };
 

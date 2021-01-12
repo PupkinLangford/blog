@@ -1,13 +1,10 @@
 import express from 'express';
+import commentController from '../controllers/commentController';
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
-router.get('/', (_req, res) => {
-  res.send('Fetching all comments');
-});
+router.get('/', commentController.comments_get);
 
-router.post('/', (_req, res) => {
-  res.send('Saving a diary!');
-});
+router.post('/', commentController.comment_post);
 
 export default router;
