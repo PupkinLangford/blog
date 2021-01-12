@@ -79,4 +79,16 @@ const user_login: RequestHandler = (req, res, next) => {
   });
 };
 
-export default {user_create, user_login};
+const user_get: RequestHandler = (req, res, next) => {
+  User.findOne({_id: req.params.id}).exec((err, foundUser) => {
+    if (err) {
+      return next(err);
+    }
+    if (!foundUser) {
+      return res.json({message: 'user not found'});
+    }
+    return res.json({username: foundUser.username});
+  });
+};
+
+export default {user_create, user_login, user_get};
