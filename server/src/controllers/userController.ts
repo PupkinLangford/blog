@@ -3,24 +3,28 @@ import {RequestHandler} from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-const users_get: RequestHandler = (_req, res, next) => {// Unsafe: shows db info
+/*const users_get: RequestHandler = (_req, res, next) => {
   User.find({}).exec((err, users) => {
     if (err) {
       return next(err);
     }
     return res.json(users);
   });
-};
+};*/
 
 const user_create: RequestHandler = (req, res, next) => {
   // Need to have validation
 
   const username = (req.body.username as string).toLowerCase();
   const password = req.body.password as string;
+  const key = req.body.key as string;
 
   User.findOne({username: username}).exec((err, foundUser) => {
     if (err) {
       return next(err);
+    }
+    if (key !== process.env.SIGNUP_KEY) {
+      return res.json({message: 'Key incorrect'});
     }
     if (foundUser) {
       return res.json({message: 'Username already exists'});
@@ -75,4 +79,4 @@ const user_login: RequestHandler = (req, res, next) => {
   });
 };
 
-export default {user_create, user_login, users_get};
+export default {user_create, user_login};

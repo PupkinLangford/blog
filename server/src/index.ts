@@ -5,7 +5,7 @@ import bodyparser from 'body-parser';
 import path from 'path';
 import session from 'express-session';
 import passport from 'passport';
-import {Strategy as LocalStrategy} from 'passport-local';
+import jwtStrategy from './jwtStrategy';
 import mongoose from 'mongoose';
 
 import postRouter from './routes/posts';
@@ -22,6 +22,7 @@ mongoose.connection.on(
 const app = express();
 app.use(bodyparser.urlencoded({extended: false}));
 app.use(bodyparser.json());
+passport.use(jwtStrategy);
 
 app.use(cors());
 
