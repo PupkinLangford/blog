@@ -1,4 +1,6 @@
 import Comment from '../models/comment';
+import Post from '../models/post';
+import {IUser} from '../models/user';
 import {RequestHandler} from 'express';
 import passport from 'passport';
 import {body, validationResult} from 'express-validator';
@@ -11,6 +13,14 @@ const comments_get: RequestHandler = (req, res, next) => {
       if (err) return next(err);
       return res.json(foundComments);
     });
+};
+
+const comment_get: RequestHandler = (req, res, next) => {
+  Comment.findById(req.params.comment_id).exec((err, foundComment) => {
+    if (err) return next(err);
+    if (!foundComment) return res.json({message: 'Comment not found'});
+    return res.json(foundComment);
+  });
 };
 
 const comment_post: RequestHandler[] = [
@@ -32,7 +42,26 @@ const comment_post: RequestHandler[] = [
   },
 ];
 
-// PUT comment update
-// DELETE comment delete
+const comment_delete: RequestHandler[] = [
+  passport.authenticate('jwt', {session: false}),
+  (req, res, next) => {
+    if (!req.user) return res.json({message: 'User not found'});
+    Comment.findById(req.params.comment_id).exec((err, foundComment) => {
+      if (err) return next(err);
+      if (!foundComment) return res.json({message: 'Comment not found'});
+      Post.findById(foundComment.post).exec((err, foundPost) => {
+        if (err) return next(err);
+        if (!foundPost) return next(err);
+        if (foundPost.author.toString() !== (req.user as IUser)._id.toString())
+          return res.json({message: 'Unauthorized User'});
+        Comment.findByIdAndDelete(req.params.comment_id).exec((err, result) => {
+          if (err) return next(err);
+          return res.json(result);
+        });
+      });
+    });
+    return undefined;
+  },
+];
 
-export default {comments_get, comment_post};
+export default {comments_get, comment_get, comment_post, comment_delete};

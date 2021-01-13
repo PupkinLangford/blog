@@ -2,8 +2,6 @@ require('dotenv').config();
 import express from 'express';
 import cors from 'cors';
 import bodyparser from 'body-parser';
-import path from 'path';
-import session from 'express-session';
 import passport from 'passport';
 import jwtStrategy from './jwtStrategy';
 import mongoose from 'mongoose';

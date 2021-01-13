@@ -1,4 +1,4 @@
-import User, {IUser} from '../models/user';
+import {IUser} from '../models/user';
 import Post from '../models/post';
 import {RequestHandler} from 'express';
 import passport from 'passport';
@@ -112,6 +112,7 @@ const post_publish: RequestHandler[] = [
 ];
 
 const post_delete: RequestHandler[] = [
+  // TODO: Make it delete all comments too
   passport.authenticate('jwt', {session: false}),
   (req, res, next) => {
     if (!req.user) return res.json({message: 'User not found'});
