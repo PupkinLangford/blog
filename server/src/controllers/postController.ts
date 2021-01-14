@@ -1,5 +1,6 @@
 import {IUser} from '../models/user';
 import Post from '../models/post';
+import Comment from '../models/comment';
 import {RequestHandler} from 'express';
 import passport from 'passport';
 import {body, validationResult} from 'express-validator';
@@ -50,9 +51,15 @@ const post_create: RequestHandler[] = [
       content: req.body.content,
       author: (req.user as IUser)._id,
     });
-    post.save(err => {
+    post.save((err, result) => {
       if (err) return next(err);
-      return res.json({message: 'Post uploaded'});
+      result.populate(
+        {path: 'author', select: 'username'},
+        (err, populatedResult) => {
+          if (err) return next(err);
+          return res.json(populatedResult);
+        }
+      );
     });
     return undefined;
   },
@@ -80,7 +87,13 @@ const post_update: RequestHandler[] = [
         {new: true}
       ).exec((err, result) => {
         if (err) return next(err);
-        return res.json(result);
+        result?.populate(
+          {path: 'author', select: 'username'},
+          (err, populatedResult) => {
+            if (err) return next(err);
+            return res.json(populatedResult);
+          }
+        );
       });
     });
     return undefined;
@@ -112,7 +125,6 @@ const post_publish: RequestHandler[] = [
 ];
 
 const post_delete: RequestHandler[] = [
-  // TODO: Make it delete all comments too
   passport.authenticate('jwt', {session: false}),
   (req, res, next) => {
     if (!req.user) return res.json({message: 'User not found'});
@@ -123,7 +135,10 @@ const post_delete: RequestHandler[] = [
         return res.json({message: 'Unauthorized User'});
       Post.findByIdAndDelete(req.params.id).exec((err, result) => {
         if (err) return next(err);
-        return res.json(result);
+        Comment.deleteMany({post: req.params.id}).exec(err => {
+          if (err) return next(err);
+          return res.json(result);
+        });
       });
     });
     return undefined;
