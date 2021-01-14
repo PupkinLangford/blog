@@ -21,4 +21,6 @@ CommentSchema.virtual('format_date').get(function (this: IComment) {
   );
 });
 
+CommentSchema.set('toJSON', {virtuals: true});
+
 export default model<IComment>('Comment', CommentSchema);

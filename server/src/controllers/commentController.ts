@@ -8,7 +8,7 @@ import {Types} from 'mongoose';
 
 const comments_get: RequestHandler = (req, res, next) => {
   Comment.find({post: req.params.id})
-    .sort('-timestamp')
+    .sort('timestamp')
     .exec((err, foundComments) => {
       if (err) return next(err);
       return res.json(foundComments);

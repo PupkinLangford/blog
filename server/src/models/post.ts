@@ -23,4 +23,10 @@ PostSchema.virtual('format_date').get(function (this: IPost) {
   );
 });
 
+PostSchema.virtual('snippet').get(function (this: IPost) {
+  return this.content.slice(0, 50);
+});
+
+PostSchema.set('toJSON', {virtuals: true});
+
 export default model<IPost>('Post', PostSchema);
