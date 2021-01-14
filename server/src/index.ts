@@ -36,6 +36,10 @@ app.use('/api/users', userRouter);
 app.use('/api/posts', postRouter);
 app.use('/api/posts/:id/comments', commentRouter);
 
+app.use('*', (_req, res) => {
+  res.status(404).json("{error: Endpoint doesn't exists}");
+});
+
 app.listen(process.env.SERVER_PORT, () => {
   console.log(`now listening for requests on port ${process.env.SERVER_PORT}`);
 });
