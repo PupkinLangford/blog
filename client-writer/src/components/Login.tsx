@@ -1,6 +1,7 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import "./Login.css";
 import {loginUser} from '../apiFunctions';
+import {useHistory} from 'react-router-dom';
 
 interface LoginProps {
 
@@ -8,8 +9,16 @@ interface LoginProps {
 
 const Login = (props: LoginProps) => {
 
+    const history = useHistory();
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            history.push('/');
+        }
+    });
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target.name === 'username') {
@@ -21,9 +30,20 @@ const Login = (props: LoginProps) => {
 
     const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log({username, password});
+        if (!username) {
+            setError("Username not provided");
+            return;
+        }
         const res = await loginUser(username, password);
-        console.log(res);
+        if (!res.token) {
+            setError(res.message);
+        } else {
+            localStorage.setItem('token', res.token);
+            setUsername("");
+            setPassword("");
+            setError("");
+            history.push("/");
+        }
     }
 
     return (
@@ -37,6 +57,7 @@ const Login = (props: LoginProps) => {
                 <label htmlFor="password">password</label>
                 <input id="password" name="password" type="password" value={password} onChange={handleChange}/>
             </div>
+            <p>{error}</p>
             <button type="submit">Login</button>
             </form>
         </div>

@@ -12,7 +12,7 @@ const Navbar = (props : navbarProps) => {
                     <Link to="/">Home</Link>
                 </li>
                 <li>
-                    <Link to="/shop">Shop</Link>
+                    <Link to="/logout">Logout</Link>
                 </li>
                 <li>
                 </li>

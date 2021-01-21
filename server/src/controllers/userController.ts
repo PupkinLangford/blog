@@ -75,7 +75,11 @@ const user_login: RequestHandler = (req, res, next) => {
         process.env.JWT_SECRET as string,
         opts
       );
-      return res.status(200).json({message: 'login successful', token});
+      return res.status(200).json({
+        message: 'login successful',
+        token,
+        username: foundUser.username,
+      });
     });
   });
 };
