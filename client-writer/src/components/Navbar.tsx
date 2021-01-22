@@ -2,9 +2,12 @@ import React from "react";
 import "./Navbar.css";
 import {Link} from "react-router-dom";
 
-interface navbarProps {};
+interface navbarProps {
+    user: string | null
+};
 
 const Navbar = (props : navbarProps) => {
+    
     return (
         <nav>
             <ul className="navlinks">
@@ -15,6 +18,7 @@ const Navbar = (props : navbarProps) => {
                     <Link to="/logout">Logout</Link>
                 </li>
                 <li>
+                    {props.user}
                 </li>
             </ul>
         </nav>

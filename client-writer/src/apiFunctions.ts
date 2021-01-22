@@ -11,3 +11,11 @@ export const loginUser = async (username: string, password: string) => {
     return response.json();
 }
 
+export const getPosts = async () => {
+    const response = await fetch(base_url + 'posts/all/', {
+        headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')},
+    });
+
+    return response.json();
+}
+
