@@ -3,6 +3,8 @@ import "./PostList.css";
 import {Link, useHistory} from "react-router-dom";
 import {getPosts} from '../apiFunctions';
 import { IPost } from "../types";
+import PostPreview from "./PostPreview";
+import Loader from "react-loader-spinner";
 
 interface PostListProps {
 
@@ -16,7 +18,7 @@ const PostList = (props: PostListProps) => {
     useEffect(() => {
         const getAllPosts = async () => {
             const allPosts = await getPosts();
-            //console.log(allPosts);
+            console.log(allPosts);
             setPosts(allPosts);
         }
         if (!localStorage.getItem('token')) {
@@ -26,14 +28,24 @@ const PostList = (props: PostListProps) => {
         }
     });
 
-    return (
+    return ( posts.length ?
         <div className="page">
             <ul>
+                
                 {posts.map(post => {
-                   return <li>{post.title + ": " + post.snippet + "---by: "  + post.author.username + post.format_date}</li>
+                   return <li><PostPreview post={post}/></li>
                 })}
             </ul>
         </div>
+        : 
+            <Loader
+            className="page"
+            type="TailSpin"
+            color="#00BFFF"
+            height={100}
+            width={100}
+            timeout={2000}
+            />
     );
 
 };

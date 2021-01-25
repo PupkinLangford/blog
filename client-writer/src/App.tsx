@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Navbar from './components/Navbar';
 import PostList from './components/PostList';
 import Login from './components/Login';
+import Post from './components/Post';
 
 
 function App() {
@@ -27,6 +28,9 @@ function App() {
         <Switch>
           <Route exact path="/">
             <PostList/>
+          </Route>
+          <Route path="/posts/:id">
+            <Post/>
           </Route>
           <Route exact path="/login">
             <Login handleUser={handleUser}/>

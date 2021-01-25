@@ -15,7 +15,15 @@ export const getPosts = async () => {
     const response = await fetch(base_url + 'posts/all/', {
         headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')},
     });
+    if (response.status === 401) {
+        localStorage.clear();
+    }
+    return response.json();
+}
 
+export const getPost = async (id: string) => {
+    const response = await fetch(base_url + 'posts/' + id);
+    
     return response.json();
 }
 
