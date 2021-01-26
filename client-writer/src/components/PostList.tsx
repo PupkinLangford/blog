@@ -18,8 +18,11 @@ const PostList = (props: PostListProps) => {
     useEffect(() => {
         const getAllPosts = async () => {
             const allPosts = await getPosts();
-            console.log(allPosts);
-            setPosts(allPosts);
+            if (allPosts.error) {
+                history.push('/login');
+            } else {
+                setPosts(allPosts);
+            }
         }
         if (!localStorage.getItem('token')) {
             history.push('/login');

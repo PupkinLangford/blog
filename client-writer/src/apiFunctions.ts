@@ -17,13 +17,18 @@ export const getPosts = async () => {
     });
     if (response.status === 401) {
         localStorage.clear();
+        return {error: 'Token Expired'};
     }
     return response.json();
 }
 
 export const getPost = async (id: string) => {
     const response = await fetch(base_url + 'posts/' + id);
-    
+    return response.json();
+}
+
+export const getComments = async (id: string) => {
+    const response = await fetch(base_url+ 'posts/' + id + "/comments");
     return response.json();
 }
 

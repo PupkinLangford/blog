@@ -9,3 +9,10 @@ export interface IPost {
     snippet: string;
     _id: string;
   }
+
+export interface IComment {
+    username: string,
+    content: string,
+    format_date: Date,
+    _id: string
+}
