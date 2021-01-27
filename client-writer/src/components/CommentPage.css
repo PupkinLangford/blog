@@ -1,0 +1,15 @@
+.commentpage .byline {
+    color: #4a4a4a;
+    font-size: 12px;
+}
+
+.commentpage .dateline {
+    color: #919191;
+    text-transform: uppercase;
+    font-size: 16px;
+    margin: 15px 0;
+}
+
+.commentpage .content {
+    font-size: 16px;
+}

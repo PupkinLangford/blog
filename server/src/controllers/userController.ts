@@ -92,12 +92,12 @@ const user_get: RequestHandler = (req, res, next) => {
     if (!foundUser) {
       return res.json({message: 'user not found'});
     }
-    Post.find({author: req.params.id, published: true}).exec(
-      (err, foundPosts) => {
+    Post.find({author: req.params.id, published: true})
+      .populate('author')
+      .exec((err, foundPosts) => {
         if (err) return next(err);
         return res.json({username: foundUser.username, posts: foundPosts});
-      }
-    );
+      });
   });
 };
 

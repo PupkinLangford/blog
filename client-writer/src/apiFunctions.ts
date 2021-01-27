@@ -11,6 +11,11 @@ export const loginUser = async (username: string, password: string) => {
     return response.json();
 }
 
+export const getUser = async (id: string) => {
+    const response = await fetch(base_url + 'users/' + id);
+    return response.json();
+}
+
 export const getPosts = async () => {
     const response = await fetch(base_url + 'posts/all/', {
         headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')},
@@ -29,6 +34,11 @@ export const getPost = async (id: string) => {
 
 export const getComments = async (id: string) => {
     const response = await fetch(base_url+ 'posts/' + id + "/comments");
+    return response.json();
+}
+
+export const getComment = async (id: string, comment_id: string) => {
+    const response = await fetch(base_url + 'posts/' + id + "/comments/" +comment_id);
     return response.json();
 }
 

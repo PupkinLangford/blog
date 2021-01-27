@@ -16,3 +16,8 @@ export interface IComment {
     format_date: Date,
     _id: string
 }
+
+export interface IUser {
+    username: string,
+    posts: IPost[]
+}

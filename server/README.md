@@ -16,5 +16,5 @@
 |Delete post | `/api/posts/:id` | `DELETE`| | Yes |
 | Get comments for post | `/api/posts/:id/comments` | `GET`| | No |
 | Post comment | `/api/posts/:id/comments` | `POST`| content, username | No |
-| Get comment by id | `/api/posts/:id/comments/:comment_id` | `POST`| | No |
+| Get comment by id | `/api/posts/:id/comments/:comment_id` | `GET`| | No |
 | Delete comment | `/api/posts/:id/comments/:comment_id` | `DELETE`| | Yes |

@@ -6,7 +6,6 @@ import { IComment, IPost } from "../types";
 import Loader from "react-loader-spinner";
 import Comment from './Comment';
 
-// Need to add comments
 const Post = () => {
     const { id } = useParams<{id: string}>();
     const [post, setPost] = useState<IPost | null>();
@@ -29,12 +28,12 @@ const Post = () => {
         post ?
         <div className="page post">
             <div className="title"><h1>{post.title}</h1></div>
-            <div className="byline">{post.author.username}</div>
+            <Link to={'/users/' + post.author._id}><div className="byline">{post.author.username}</div></Link> 
             <div className="dateline">{post.format_date}</div>
             <div className="snippet">{post.content}</div>
             <h3>Comments</h3>
             {comments.map(comment => {
-                return <Comment comment={comment}/>
+                return <Comment comment={comment} parent={id}/>
             })}
         </div>
         :   <Loader

@@ -10,7 +10,7 @@ interface PostPreviewProps {
 const PostPreview = (props: PostPreviewProps) => {
     
     return (
-        <div className="post-preview" style={props.post.published? 
+        <div className="post-preview" style={!props.post.published? 
                 {border: "1px solid red",
                 background: 'rgba(255, 0, 0, 0.1)'} 
                 : {border: "1px solid black"}}>

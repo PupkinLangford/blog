@@ -6,20 +6,24 @@ import Navbar from './components/Navbar';
 import PostList from './components/PostList';
 import Login from './components/Login';
 import Post from './components/Post';
+import UserPage from './components/UserPage';
+import CommentPage from './components/CommentPage';
 
 
 function App() {
 
   const [user, setUser] = useState<string | null>(localStorage.getItem('username'));
+  const history = useHistory();
 
   const handleUser = (user: string) => setUser(user);
   useEffect(() => {
     if(user == null) {
       localStorage.removeItem('username');
+      if(!localStorage.getItem('token')) history.push("/login");
     } else {
       localStorage.setItem('username', user as string);
     }
-  }, [user]);
+  }, [history, user]);
 
   return (
     <div className="App">
@@ -29,8 +33,14 @@ function App() {
           <Route exact path="/">
             <PostList/>
           </Route>
+          <Route path="/posts/:id/comments/:comment_id">
+            <CommentPage/>
+          </Route>
           <Route path="/posts/:id">
             <Post/>
+          </Route>
+          <Route path="/users/:id">
+            <UserPage/>
           </Route>
           <Route exact path="/login">
             <Login handleUser={handleUser}/>
