@@ -8,6 +8,7 @@ import Login from './components/Login';
 import Post from './components/Post';
 import UserPage from './components/UserPage';
 import CommentPage from './components/CommentPage';
+import PostForm from './components/PostForm';
 
 
 function App() {
@@ -19,7 +20,8 @@ function App() {
   useEffect(() => {
     if(user == null) {
       localStorage.removeItem('username');
-      if(!localStorage.getItem('token')) history.push("/login");
+      console.log(history);
+      //if(!localStorage.getItem('token')) history.push("/login");
     } else {
       localStorage.setItem('username', user as string);
     }
@@ -35,6 +37,9 @@ function App() {
           </Route>
           <Route path="/posts/:id/comments/:comment_id">
             <CommentPage/>
+          </Route>
+          <Route exact path="/posts/new">
+            <PostForm/>
           </Route>
           <Route path="/posts/:id">
             <Post/>

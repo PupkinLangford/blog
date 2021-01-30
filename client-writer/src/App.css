@@ -22,3 +22,13 @@ a {
 a, a:visited, a:hover, a:active {
   color: inherit;
 }
+
+form label {
+  display: block;
+  margin: 10px;
+}
+
+textarea {
+  width: 400px;
+  height: 300px;
+}
