@@ -83,3 +83,11 @@ export const getComment = async (id: string, comment_id: string) => {
     return response.json();
 }
 
+export const deleteComment = async (post_id: string, comment_id: string) => {
+    const response = await fetch(base_url + 'posts/' + post_id + "/comments/" + comment_id, {
+        method: 'DELETE',
+        headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type' : 'application/json'},
+    });
+    return response.json();
+}

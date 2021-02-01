@@ -14,7 +14,7 @@ export interface IComment {
     username: string,
     content: string,
     format_date: Date,
-    _id: string
+    _id: string,
 }
 
 export interface IUser {

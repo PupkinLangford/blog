@@ -57,7 +57,7 @@ const Post = () => {
             <div className="content">{post.content}</div>
             <h3>Comments</h3>
             {comments.map(comment => {
-                return <Comment comment={comment} parent={id}/>
+                return <Comment comment={comment} parent={post}/>
             })}
         </div>
         :   <Loader
