@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import "./Post.css";
 import {Link, useHistory, useParams} from "react-router-dom";
-import {getComments, getPost, publishPost} from '../apiFunctions';
+import {deletePost, getComments, getPost, publishPost} from '../apiFunctions';
 import { IComment, IPost } from "../types";
 import Loader from "react-loader-spinner";
 import Comment from './Comment';
@@ -32,6 +32,14 @@ const Post = () => {
         history.go(0);
     }
 
+    const deleteSubmit = async () => {
+        const r = window.confirm("Are you sure you want to delete this post?");
+        if(r) {
+            await deletePost(id);
+            history.push("/");
+        }
+    }
+
     
     return (
         post ?
@@ -44,7 +52,7 @@ const Post = () => {
                     <button>Edit Post</button>
                 </Link>
                 <button type="button" onClick={publishSubmit}>{post.published ? "Unpublish Post" : "Publish Post"}</button>
-                <button>Delete Post</button>
+                <button type="button" onClick={deleteSubmit}>Delete Post</button>
             </div> : null}
             <div className="content">{post.content}</div>
             <h3>Comments</h3>

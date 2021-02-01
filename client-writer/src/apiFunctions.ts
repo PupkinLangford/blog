@@ -61,6 +61,16 @@ export const publishPost = async (id: string) => {
     return response.json();
 }
 
+export const deletePost = async (id: string) => {
+    const response = await fetch(base_url + 'posts/' + id, {
+        method: 'DELETE',
+        headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type' : 'application/json'},
+    });
+    return response.json();
+}
+
+
 
 
 export const getComments = async (id: string) => {
