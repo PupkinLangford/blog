@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import "./PostList.css";
 import {useHistory} from "react-router-dom";
 import {getPosts} from '../apiFunctions';
 import { IPost } from "../types";

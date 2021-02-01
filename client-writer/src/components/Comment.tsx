@@ -14,8 +14,6 @@ const Comment = (props: CommentProps) => {
                         "/comments/" + props.comment._id : "";
     return (
         <div className="comment">
-            <Link to={"/posts/" + props.comment._id}>
-            </Link>
             <div className="byline">{"by " + props.comment.username}</div>
             <div className="dateline">{props.comment.format_date}</div>
             <Link to={"/posts/" + props.parent._id + commentLink}>
