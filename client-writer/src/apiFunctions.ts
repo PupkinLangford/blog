@@ -32,7 +32,7 @@ export const getPost = async (id: string) => {
     return response.json();
 }
 
-export const createPost = async (title: string, content: string) => {
+export const createPost = async (title: string, content: string, id: string) => {
     const response = await fetch(base_url + 'posts/', {
         method: 'POST',
         headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token'),
@@ -41,6 +41,17 @@ export const createPost = async (title: string, content: string) => {
     });
     return response.json();
 }
+
+export const updatePost = async (title: string, content: string, id: string) => {
+    const response = await fetch(base_url + 'posts/' + id, {
+        method: 'PUT',
+        headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type' : 'application/json'},
+        body: JSON.stringify({title, content}),
+    });
+    return response.json();
+}
+
 
 export const getComments = async (id: string) => {
     const response = await fetch(base_url+ 'posts/' + id + "/comments");

@@ -1,14 +1,17 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import "./PostForm.css";
-import {createPost} from '../apiFunctions';
-import {useHistory} from 'react-router-dom';
+import {createPost, getPost, updatePost} from '../apiFunctions';
+import {useHistory, useParams} from 'react-router-dom';
+
+
 
 interface PostFormProps {
-    //handleUser: (user: string) => void
+    method: string,
 };
 
 const PostForm = (props: PostFormProps) => {
 
+    const { id } = useParams<{id: string}>();
     const history = useHistory();
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
@@ -18,7 +21,15 @@ const PostForm = (props: PostFormProps) => {
         if (!localStorage.getItem('token')) {
             history.push('/');
         }
-    });
+        const fillPost = async () => {
+            const p = await getPost(id);
+            setTitle(p.title);
+            setContent(p.content);
+        };
+        if (props.method === "PUT") {
+            fillPost();
+        }
+    }, [history, id, props.method]);
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         if (e.target.name === 'title') {
@@ -38,7 +49,8 @@ const PostForm = (props: PostFormProps) => {
             setError("content not provided");
             return;
         }
-        const res = await createPost(title, content);
+        const apiCall = await props.method === 'PUT' ? updatePost : createPost;
+        const res = await apiCall(title, content, id);
         if (res.message) {
             setError(res.message);
         } else {
@@ -58,7 +70,7 @@ const PostForm = (props: PostFormProps) => {
             </div>
             <div>
                 <label htmlFor="content">Post Body</label>
-                <textarea id="content" name="content" onChange={handleChange}>{content}</textarea>
+                <textarea id="content" name="content" defaultValue={content} onChange={handleChange}></textarea>
             </div>
             <p>{error}</p>
             <button type="submit">Submit Post</button>

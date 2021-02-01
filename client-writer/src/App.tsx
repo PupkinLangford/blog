@@ -20,7 +20,6 @@ function App() {
   useEffect(() => {
     if(user == null) {
       localStorage.removeItem('username');
-      console.log(history);
       //if(!localStorage.getItem('token')) history.push("/login");
     } else {
       localStorage.setItem('username', user as string);
@@ -38,8 +37,11 @@ function App() {
           <Route path="/posts/:id/comments/:comment_id">
             <CommentPage/>
           </Route>
+          <Route path="/posts/:id/edit">
+            <PostForm method="PUT"/>
+          </Route>
           <Route exact path="/posts/new">
-            <PostForm/>
+            <PostForm method="POST"/>
           </Route>
           <Route path="/posts/:id">
             <Post/>

@@ -10,6 +10,7 @@ const Post = () => {
     const { id } = useParams<{id: string}>();
     const [post, setPost] = useState<IPost | null>();
     const [comments, setComments] = useState<IComment[]>([]);
+    const [showButtons, setShowButtons] = useState(false);
 
     useEffect(() => {
         const getPostById = async () => {
@@ -21,8 +22,10 @@ const Post = () => {
             setComments(c);
         }
         getPostById();
+        setShowButtons(localStorage.getItem('username') === post?.author.username);
         getAllComments();
-    },[id]);
+    },[id, post?.author.username]);
+
     
     return (
         post ?
@@ -30,7 +33,14 @@ const Post = () => {
             <div className="title"><h1>{post.title}</h1></div>
             <Link to={'/users/' + post.author._id}><div className="byline">{post.author.username}</div></Link> 
             <div className="dateline">{post.format_date}</div>
-            <div className="snippet">{post.content}</div>
+            {showButtons ? <div className="editbuttons">
+                <Link to={"/posts/" + post._id + "/edit"}>
+                    <button>Edit Post</button>
+                </Link>
+                <button>{post.published ? "Unpublish Post" : "Publish Post"}</button>
+                <button>Delete Post</button>
+            </div> : null}
+            <div className="content">{post.content}</div>
             <h3>Comments</h3>
             {comments.map(comment => {
                 return <Comment comment={comment} parent={id}/>
