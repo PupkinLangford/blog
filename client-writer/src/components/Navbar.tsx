@@ -3,7 +3,8 @@ import "./Navbar.css";
 import {Link} from "react-router-dom";
 
 interface navbarProps {
-    user: string | null
+    user: string | null,
+    user_id: string | null,
 };
 
 const Navbar = (props : navbarProps) => {
@@ -21,7 +22,9 @@ const Navbar = (props : navbarProps) => {
                     <Link to="/logout">Logout</Link>
                 </li>
                 <li>
-                    {props.user}
+                    <Link to={"/users/" + props.user_id}>
+                        {props.user}
+                    </Link>
                 </li>
             </ul>
         </nav>

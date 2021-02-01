@@ -79,6 +79,7 @@ const user_login: RequestHandler = (req, res, next) => {
         message: 'login successful',
         token,
         username: foundUser.username,
+        _id: foundUser._id,
       });
     });
   });

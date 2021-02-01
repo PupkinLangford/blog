@@ -4,7 +4,7 @@ import {loginUser} from '../apiFunctions';
 import {useHistory} from 'react-router-dom';
 
 interface LoginProps {
-    handleUser: (user: string) => void
+    handleUser: (user: string, user_id: string) => void
 };
 
 const Login = (props: LoginProps) => {
@@ -39,7 +39,7 @@ const Login = (props: LoginProps) => {
             setError(res.message);
         } else {
             localStorage.setItem('token', res.token);
-            props.handleUser(res.username);
+            props.handleUser(res.username, res._id);
             setUsername("");
             setPassword("");
             setError("");

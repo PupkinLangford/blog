@@ -20,7 +20,7 @@ export const getPosts = async () => {
     const response = await fetch(base_url + 'posts/all/', {
         headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token')},
     });
-    if (response.status === 401) {
+    if (response.status === 401 || response.status === 403) {
         localStorage.clear();
         return {error: 'Token Expired'};
     }
@@ -51,6 +51,16 @@ export const updatePost = async (title: string, content: string, id: string) => 
     });
     return response.json();
 }
+
+export const publishPost = async (id: string) => {
+    const response = await fetch(base_url + 'posts/' + id, {
+        method: 'POST',
+        headers: {'Authorization' : 'Bearer ' + localStorage.getItem('token'),
+                'Content-Type' : 'application/json'},
+    });
+    return response.json();
+}
+
 
 
 export const getComments = async (id: string) => {

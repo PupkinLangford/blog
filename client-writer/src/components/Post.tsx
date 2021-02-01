@@ -1,13 +1,14 @@
 import React, {ChangeEvent, useEffect, useState} from "react";
 import "./Post.css";
 import {Link, useHistory, useParams} from "react-router-dom";
-import {getComments, getPost} from '../apiFunctions';
+import {getComments, getPost, publishPost} from '../apiFunctions';
 import { IComment, IPost } from "../types";
 import Loader from "react-loader-spinner";
 import Comment from './Comment';
 
 const Post = () => {
     const { id } = useParams<{id: string}>();
+    const history = useHistory();
     const [post, setPost] = useState<IPost | null>();
     const [comments, setComments] = useState<IComment[]>([]);
     const [showButtons, setShowButtons] = useState(false);
@@ -26,6 +27,11 @@ const Post = () => {
         getAllComments();
     },[id, post?.author.username]);
 
+    const publishSubmit = async () => {
+        await publishPost(id);
+        history.go(0);
+    }
+
     
     return (
         post ?
@@ -37,7 +43,7 @@ const Post = () => {
                 <Link to={"/posts/" + post._id + "/edit"}>
                     <button>Edit Post</button>
                 </Link>
-                <button>{post.published ? "Unpublish Post" : "Publish Post"}</button>
+                <button type="button" onClick={publishSubmit}>{post.published ? "Unpublish Post" : "Publish Post"}</button>
                 <button>Delete Post</button>
             </div> : null}
             <div className="content">{post.content}</div>
