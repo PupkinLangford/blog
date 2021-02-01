@@ -15,14 +15,15 @@ function App() {
 
   const [user, setUser] = useState<string | null>(localStorage.getItem('username'));
   const [user_id, setUserId] = useState<string | null>(localStorage.getItem('userid'));
-  const history = useHistory();
+  //const history = useHistory();
 
   const handleUser = (user: string, user_id: string) => {
     setUser(user);
     setUserId(user_id);
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
+    console.log(user);
     if(user === null) {
       //localStorage.removeItem('username');
       //if(!localStorage.getItem('token')) history.push("/login");
@@ -30,7 +31,7 @@ function App() {
       localStorage.setItem('username', user as string);
       localStorage.setItem('userid', user_id as string);
     }
-  }, [history, user, user_id]);
+  });*/
 
   return (
     <div className="App">

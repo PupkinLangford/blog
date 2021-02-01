@@ -1,0 +1,38 @@
+.App {
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-size: 14px;
+  color: #3d3d3d;
+  line-height: 1.3;
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+  display: inline;
+}
+
+.page {
+  padding-top: 50px;
+}
+
+a {
+  text-decoration: none;
+}
+
+a, a:visited, a:hover, a:active {
+  color: inherit;
+}
+
+form label {
+  display: block;
+  margin: 10px;
+}
+
+textarea {
+  width: 400px;
+  height: 300px;
+}
+
+form {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,32 @@
+.post-preview {
+    padding: 15px;
+    margin: 0 0 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.post-preview h1 {
+    color: #222;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    display: block;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.post-preview h1 > a:hover {
+    text-decoration: underline;
+}
+
+.post-preview .byline {
+    color: #919191;
+    font-size: 10px;
+}
+
+.post-preview .dateline {
+    color: #4a4a4a;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin: 15px 0;
+}

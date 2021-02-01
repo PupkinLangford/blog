@@ -40,6 +40,8 @@ const Login = (props: LoginProps) => {
         } else {
             localStorage.setItem('token', res.token);
             props.handleUser(res.username, res._id);
+            localStorage.setItem('username', res.username);
+            localStorage.setItem('userid', res._id);
             setUsername("");
             setPassword("");
             setError("");

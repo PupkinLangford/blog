@@ -1,6 +1,6 @@
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import "./PostList.css";
-import {Link, useHistory} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {getPosts} from '../apiFunctions';
 import { IPost } from "../types";
 import PostPreview from "./PostPreview";
