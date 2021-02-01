@@ -70,7 +70,7 @@ const PostForm = (props: PostFormProps) => {
             </div>
             <div>
                 <label htmlFor="content">Post Body</label>
-                <textarea id="content" name="content" defaultValue={content} onChange={handleChange}></textarea>
+                <textarea id="content" name="content" defaultValue={content} onChange={handleChange} required></textarea>
             </div>
             <p>{error}</p>
             <button type="submit">Submit Post</button>

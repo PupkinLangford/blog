@@ -91,3 +91,12 @@ export const deleteComment = async (post_id: string, comment_id: string) => {
     });
     return response.json();
 }
+
+export const createComment = async (post_id: string, username: string, content: string) => {
+    const response = await fetch(base_url + 'posts/' + post_id + '/comments', {
+        method: 'POST',
+        headers: {'Content-Type' : 'application/json'},
+        body: JSON.stringify({username, content})
+    });
+    return response.json();
+}
